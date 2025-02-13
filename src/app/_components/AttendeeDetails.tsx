@@ -125,6 +125,7 @@ const AttendeeDetails = ({ setFormProgress }: SelectTicketProps) => {
 						value={attendeeSpecialRequest}
 						placeholder="Textarea"
 						onChange={(e) => setAttendeeSpecialRequest(e.target.value)}
+						maxLength={250}
 						required
 						className="h-[127px] p-3"
 					/>
