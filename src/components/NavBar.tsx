@@ -17,7 +17,7 @@ const NavBar = () => {
 				</div>
 				<Image src={Logo} alt="Tickz Logo" width={43.79} height={22.62} />
 			</section>
-			<section className="max-lg:hidden flex items-center gap-4 p-0">
+			<section className="max-lg:hidden [&_span]:cursor-pointer flex items-center gap-4 p-0">
 				<span className="p-2.5 text-lg leading-[18px] tracking-normal h-[34px] box-border">Events</span>
 				<span className="p-2.5 text-lg leading-[18px] tracking-normal h-[34px] box-border">My Tickets</span>
 				<span className="p-2.5 text-lg leading-[18px] tracking-normal h-[34px] box-border">About Project</span>

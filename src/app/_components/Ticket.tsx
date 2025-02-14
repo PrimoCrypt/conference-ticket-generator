@@ -1,17 +1,18 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import TicketLayout from "@/assets/ticket-layout.svg";
 import ProfilePicPlaceholder from "@/assets/profile-picture-placeholder.svg";
 import BarcodeGeneratorComponent from "react-barcode";
 import { Button } from "@/components/ui/button";
-
+import domtoimage from "dom-to-image";
 interface SelectTicketProps {
 	setFormProgress: (formProgress: number) => void;
 }
 
 const Ticket = ({ setFormProgress }: SelectTicketProps) => {
 	const [attendeeData, setAttendeeData] = useState<AttendeeDataProps>({} as AttendeeDataProps);
+	const ticketRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
 		const savedData: AttendeeDataProps = JSON.parse(localStorage.getItem("attendeeData") || "{}");
@@ -20,8 +21,19 @@ const Ticket = ({ setFormProgress }: SelectTicketProps) => {
 
 	const handleBookAnotherTicket = () => {
 		localStorage.removeItem("attendeeData");
-		localStorage.setItem("formProgress", JSON.stringify(33))
+		localStorage.setItem("formProgress", JSON.stringify(33));
 		setFormProgress(33);
+	};
+
+	const handleDownloadTicket = async () => {
+		if (ticketRef.current) {
+			domtoimage.toPng(ticketRef.current).then(function (dataUrl: string) {
+				const link = document.createElement("a");
+				link.download = "ticket.png";
+				link.href = dataUrl;
+				link.click();
+			});
+		}
 	};
 
 	return (
@@ -38,13 +50,15 @@ const Ticket = ({ setFormProgress }: SelectTicketProps) => {
 				</p>
 			</section>
 			<div className="w-full flex flex-col gap-6">
-				<section className="p-8 px-[21px]  flex flex-col items-center">
+				<section ref={ticketRef} className="p-8 px-[21px]  flex flex-col items-center">
 					<div className="relative w-full max-w-[300px] h-[600px]">
-						<Image src={TicketLayout || "/placeholder.svg"} alt="ticket layout"  objectFit="cover"  />
+						<Image src={TicketLayout || "/placeholder.svg"} alt="ticket layout" objectFit="cover" />
 						<div className=" absolute h-[505px] min-[400px]:h-[600px] inset-0 flex items-center justify-center ">
 							<div className="absolute top-5 p-3  flex flex-col gap-2 min-[450px]:gap-5  border-[#24A0B5] border border-solid box-border rounded-2xl w-[220px] min-[380px]:w-[260px] h-[360px] min-[400px]:h-[426px]">
 								<section className="text-center flex flex-col items-center">
-									<h4 className="text-[24px] min-[300px]:text-[34px] leading-tight min-[300px]:leading-[34px] font-roadrage">Techember Fest &quot;25</h4>
+									<h4 className="text-[24px] sm:text-nowrap min-[300px]:text-[34px] leading-tight min-[300px]:leading-[34px] font-roadrage">
+										Techember Fest &quot;25
+									</h4>
 									<div className="p-1 text-[10px] leading-[15px] [&_p]:font-regular flex flex-col gap-1 box-border">
 										<p>📍 04 Rumens road, Ikoyi, Lagos</p>
 										<p>📅 March 15, 2025 | 7:00 PM</p>
@@ -134,7 +148,9 @@ const Ticket = ({ setFormProgress }: SelectTicketProps) => {
 						className="bg-transparent border hover:bg-[#24A0B5]/10 border-solid border-[#24A0B5] rounded-lg px-6 py-3 w-full h-fit font-jejumyeongjo text-[#24A0B5]">
 						Book Another Ticket
 					</Button>
-					<Button className="bg-[#24A0B5] text-white rounded-lg px-6 py-3 w-full h-fit font-jejumyeongjo">
+					<Button
+						onClick={() => handleDownloadTicket()}
+						className="bg-[#24A0B5] text-white rounded-lg px-6 py-3 w-full h-fit font-jejumyeongjo">
 						Download Ticket
 					</Button>
 				</section>

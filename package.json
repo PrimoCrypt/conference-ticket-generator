@@ -14,6 +14,8 @@
     "@syncfusion/ej2-react-barcode-generator": "^28.2.5",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "dom-to-image": "^2.6.0",
+    "html2canvas": "^1.4.1",
     "lucide-react": "^0.475.0",
     "next": "15.1.7",
     "react": "^19.0.0",
@@ -25,6 +27,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@types/dom-to-image": "^2.6.7",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
