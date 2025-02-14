@@ -40,8 +40,14 @@ const AttendeeDetails = ({ setFormProgress }: SelectTicketProps) => {
 		};
 
 		localStorage.setItem("attendeeData", JSON.stringify(updatedData));
+		localStorage.setItem("formProgress", JSON.stringify(100))
+
 		setFormProgress(100);
 	};
+	const handlePreviousStep = () =>{
+		localStorage.setItem("formProgress", JSON.stringify(33))
+		setFormProgress(33)
+	}
 
 	const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
@@ -133,7 +139,7 @@ const AttendeeDetails = ({ setFormProgress }: SelectTicketProps) => {
 
 				<section className="flex w-full max-md:flex-col-reverse gap-6">
 					<Button
-						onClick={() => setFormProgress(33)}
+						onClick={() => handlePreviousStep()}
 						className="bg-transparent border border-solid border-[#24A0B5] hover:bg-[#24A0B5]/10 rounded-lg px-6 py-3 w-full h-fit font-jejumyeongjo text-[#24A0B5]">
 						Back
 					</Button>

@@ -20,6 +20,7 @@ const Ticket = ({ setFormProgress }: SelectTicketProps) => {
 
 	const handleBookAnotherTicket = () => {
 		localStorage.removeItem("attendeeData");
+		localStorage.setItem("formProgress", JSON.stringify(33))
 		setFormProgress(33);
 	};
 
